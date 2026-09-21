@@ -1,8 +1,7 @@
 [project]
 name = "backend"
 version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
+description = "SkyGuard AI - Backend API for AWS Anomaly Detection"
 authors = [
     { name = "Chaitanya-3012", email = "chaitanyanevse3012@email.com" }
 ]
@@ -19,9 +18,10 @@ dependencies = [
   "httpx",
   "python-multipart",
   "pandas",
-  "torch",
   "joblib",
   "numpy",
+  "psycopg2-binary>=2.9.13",
+  "aiosqlite>=0.22.1",
 ]
 
 [project.scripts]

@@ -7,6 +7,7 @@ from sqlalchemy import (
     func,
     Index,
     CheckConstraint,
+    UniqueConstraint,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from backend.database import Base
@@ -21,7 +22,7 @@ class Reading(Base):
         ForeignKey("stations.station_id", ondelete="CASCADE"),
         nullable=False
     )
-    ts: Mapped[DateTime] = mapped_column(DateTime(timezone=True), primary_key=True, nullable=False)
+    ts: Mapped[DateTime] = mapped_column(DateTime(timezone=True), nullable=False)
     temperature_c: Mapped[float | None] = mapped_column(Double, nullable=True)
     pressure_hpa: Mapped[float | None] = mapped_column(Double, nullable=True)
     humidity_pct: Mapped[float | None] = mapped_column(Double, nullable=True)
@@ -29,11 +30,11 @@ class Reading(Base):
     created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
     station: Mapped["Station"] = relationship(back_populates="readings")
-    anomaly: Mapped["Anomaly"] = relationship(back_populates="reading", uselist=False)
 
     __table_args__ = (
         Index("idx_readings_station_ts_desc", "station_id", "ts"),
         Index("idx_readings_source", "source"),
         Index("idx_readings_ts", "ts"),
         CheckConstraint("source IN ('live', 'simulator', 'historical')", name="ck_readings_source"),
+        UniqueConstraint("station_id", "ts", name="uq_readings_station_ts"),
     )

@@ -60,7 +60,7 @@ CREATE INDEX idx_readings_ts ON readings (ts DESC);
 -- ============================================================
 CREATE TABLE anomalies (
     anomaly_id      BIGSERIAL PRIMARY KEY,
-    reading_id      BIGINT      NOT NULL REFERENCES readings(reading_id) ON DELETE CASCADE,
+    reading_id      BIGINT      NOT NULL,
     station_id      VARCHAR(20) NOT NULL REFERENCES stations(station_id) ON DELETE CASCADE,
     ts              TIMESTAMPTZ NOT NULL,
     anomaly_type    VARCHAR(30) NOT NULL CHECK (anomaly_type IN ('spike', 'drift', 'frozen', 'dropout', 'multivariate', 'unknown')),

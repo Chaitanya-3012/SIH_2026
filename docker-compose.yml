@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: skyguard-timescaledb
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: skyguard
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescaledb_data:/var/lib/postgresql/data
+      - ./backend/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d skyguard"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: skyguard-backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@timescaledb:5432/skyguard
+      ML_ARTIFACTS_DIR: /app/ml_artifacts
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+      BACKEND_API_URL: http://localhost:8000/internal/ingest
+      ENVIRONMENT: development
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./backend/ml_artifacts:/app/ml_artifacts
+      - ./backend/data:/app/data
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000
+
+volumes:
+  timescaledb_data:

@@ -17,11 +17,7 @@ class Anomaly(Base):
     __tablename__ = "anomalies"
 
     anomaly_id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
-    reading_id: Mapped[int] = mapped_column(
-        BigInteger,
-        ForeignKey("readings.reading_id", ondelete="CASCADE"),
-        nullable=False
-    )
+    reading_id: Mapped[int] = mapped_column(BigInteger, nullable=False)
     station_id: Mapped[str] = mapped_column(
         String(20),
         ForeignKey("stations.station_id", ondelete="CASCADE"),
@@ -42,7 +38,6 @@ class Anomaly(Base):
     reviewed_at: Mapped[DateTime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     reviewed_by: Mapped[str | None] = mapped_column(String(100), nullable=True)
 
-    reading: Mapped["Reading"] = relationship(back_populates="anomaly")
     station: Mapped["Station"] = relationship(back_populates="anomalies")
 
     __table_args__ = (
