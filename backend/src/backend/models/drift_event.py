@@ -31,7 +31,7 @@ class DriftEvent(Base):
     station: Mapped["Station"] = relationship(back_populates="drift_events")
 
     __table_args__ = (
-        Index("idx_drift_events_station_ts", "station_id", "ts.desc()"),
+        Index("idx_drift_events_station_ts", "station_id", "ts"),
         Index("idx_drift_events_degradation", "degradation_flag", postgresql_where=(degradation_flag == True)),
         CheckConstraint("parameter IN ('temperature', 'pressure', 'humidity')", name="ck_drift_parameter"),
     )

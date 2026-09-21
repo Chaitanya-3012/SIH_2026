@@ -46,10 +46,10 @@ class Anomaly(Base):
     station: Mapped["Station"] = relationship(back_populates="anomalies")
 
     __table_args__ = (
-        Index("idx_anomalies_station_ts_desc", "station_id", "ts.desc()"),
+        Index("idx_anomalies_station_ts_desc", "station_id", "ts"),
         Index("idx_anomalies_status_open", "status", postgresql_where=(status == "open")),
         Index("idx_anomalies_reading_id", "reading_id"),
-        Index("idx_anomalies_ts", "ts.desc()"),
+        Index("idx_anomalies_ts", "ts"),
         CheckConstraint(
             "anomaly_type IN ('spike', 'drift', 'frozen', 'dropout', 'multivariate', 'unknown')",
             name="ck_anomalies_type"

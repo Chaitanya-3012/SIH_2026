@@ -32,8 +32,8 @@ class Reading(Base):
     anomaly: Mapped["Anomaly"] = relationship(back_populates="reading", uselist=False)
 
     __table_args__ = (
-        Index("idx_readings_station_ts_desc", "station_id", "ts.desc()"),
+        Index("idx_readings_station_ts_desc", "station_id", "ts"),
         Index("idx_readings_source", "source"),
-        Index("idx_readings_ts", "ts.desc()"),
+        Index("idx_readings_ts", "ts"),
         CheckConstraint("source IN ('live', 'simulator', 'historical')", name="ck_readings_source"),
     )

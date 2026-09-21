@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 from datetime import datetime, timezone
 
-from inference import SkyGuardDetector  # unmodified, from the notebook export
+from .inference import SkyGuardDetector  # unmodified, from the notebook export
 
 # --- DB column <-> model feature name mapping. Keep this the ONLY place
 # these two naming conventions meet. ---

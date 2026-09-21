@@ -18,6 +18,10 @@ dependencies = [
   "apscheduler",
   "httpx",
   "python-multipart",
+  "pandas",
+  "torch",
+  "joblib",
+  "numpy",
 ]
 
 [project.scripts]

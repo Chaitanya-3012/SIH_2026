@@ -34,7 +34,7 @@ class SensorHealth(Base):
     station: Mapped["Station"] = relationship(back_populates="health_snapshots")
 
     __table_args__ = (
-        Index("idx_sensor_health_station_ts_desc", "station_id", "ts.desc()"),
+        Index("idx_sensor_health_station_ts_desc", "station_id", "ts"),
         Index("idx_sensor_health_label", "label"),
         CheckConstraint("composite_score >= 0 AND composite_score <= 1", name="ck_health_composite"),
         CheckConstraint("label IN ('healthy', 'degrading', 'faulty')", name="ck_health_label"),
