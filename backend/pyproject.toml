@@ -6,14 +6,15 @@ readme = "README.md"
 authors = [
     { name = "Chaitanya-3012", email = "chaitanyanevse3012@email.com" }
 ]
-requires-python = ">=3.14"
-dependencies = [ "fastapi",
-    "uvicorn[standard]",
-    "sqlalchemy",
-    "pydantic",
-    "scikit-learn",
-    "apscheduler",
-    ]
+requires-python = ">=3.13"
+dependencies = [
+ "fastapi",
+ "uvicorn[standard]",
+ "sqlalchemy",
+ "pydantic",
+ "scikit-learn",
+ "apscheduler",
+]
 
 [project.scripts]
 backend = "backend:main"
