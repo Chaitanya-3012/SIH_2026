@@ -8,16 +8,20 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
- "fastapi",
- "uvicorn[standard]",
- "sqlalchemy",
- "pydantic",
- "scikit-learn",
- "apscheduler",
+  "fastapi",
+  "uvicorn[standard]",
+  "sqlalchemy[asyncio]",
+  "asyncpg",
+  "pydantic",
+  "pydantic-settings",
+  "scikit-learn",
+  "apscheduler",
+  "httpx",
+  "python-multipart",
 ]
 
 [project.scripts]
-backend = "backend:main"
+backend = "backend.main:app"
 
 [build-system]
 requires = ["uv_build>=0.12.15,<0.13.0"]
